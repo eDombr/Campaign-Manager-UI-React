@@ -1,25 +1,11 @@
 import React, { Component } from 'react';
-import axios from 'axios';
+import { connect } from 'react-redux';
+
+import { getCampaigns } from '../actions/campaigns';
 
 class CampaignList extends Component {
-    constructor(props) {
-        super(props)
-
-        this.state = {
-            campaigns: []
-        }
-    }
-
     componentDidMount() {
-        axios.get('https://5cd3f999-f49f-4e42-8b8b-173c7185f093.mock.pstmn.io/campaigns')
-            .then(
-                res => {
-                    const campaigns = res.data;
-                    this.setState({
-                        campaigns
-                    });
-                }
-            )
+        this.props.onGetCampaigns();
     }
 
     render() {
@@ -37,7 +23,7 @@ class CampaignList extends Component {
                             </tr>
                         </thead>
                         <tbody>
-                            {this.state.campaigns.map(campaign =>
+                            {this.props.campaigns.map(campaign =>
                                 <tr key={campaign.id}>
                                     <td>
                                         <span className={'badge ' + (campaign.status === 'ACTIVE' ? 'badge-primary' : 'badge-secondary')}>{campaign.status}</span>
@@ -71,4 +57,13 @@ class CampaignList extends Component {
     }
 }
 
-export default CampaignList;
+export default connect(
+    state => ({
+        campaigns: state.campaigns
+    }),
+    dispatch => ({
+        onGetCampaigns: () => {
+            dispatch(getCampaigns());
+        }
+    })
+)(CampaignList);
