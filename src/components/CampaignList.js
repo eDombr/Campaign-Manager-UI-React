@@ -2,12 +2,10 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 
-import { getCampaigns } from '../actions/campaigns';
-
 class CampaignList extends Component {
-    componentDidMount() {
-        this.props.onGetCampaigns();
-    }
+    // componentDidMount() {
+    //     this.props.onGetCampaigns();
+    // }
 
     render() {
         return (
@@ -42,7 +40,7 @@ class CampaignList extends Component {
                                                 <a className="dropdown-item" href="">
                                                     Deactivate
                                                 </a>
-                                                <Link to="/stats" className="dropdown-item">Stats</Link>
+                                                <Link to={'/stats/' + campaign.id} className="dropdown-item">Stats</Link>
                                             </div>
                                         </div>
                                     </td>
@@ -61,8 +59,8 @@ export default connect(
         campaigns: state.campaigns
     }),
     dispatch => ({
-        onGetCampaigns: () => {
-            dispatch(getCampaigns());
-        }
+        // onGetCampaigns: () => {
+        //     dispatch(getCampaigns());
+        // }
     })
 )(CampaignList);

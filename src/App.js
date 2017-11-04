@@ -10,10 +10,15 @@ import { HashRouter as Router, Route, Switch } from 'react-router-dom';
 import reducers from './reducers';
 import CampaignList from './components/CampaignList';
 import CampaignStats from './components/CampaignStats';
+import { getCampaigns } from './actions/campaigns';
 
 const store = createStore(reducers, composeWithDevTools(applyMiddleware(thunk)));
 
 class App extends Component {
+    componentDidMount() {
+        store.dispatch(getCampaigns());
+    }
+
     render() {
         return (
             <div className="App">
@@ -22,7 +27,7 @@ class App extends Component {
                     <Router>
                         <Switch>
                             <Route exact path="/" component={CampaignList} />
-                            <Route path="/stats" component={CampaignStats} />
+                            <Route path="/stats/:id" component={CampaignStats} />
                         </Switch>
                     </Router>
                 </Provider>
