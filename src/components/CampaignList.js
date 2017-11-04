@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import { Link } from 'react-router-dom';
 
 import { getCampaigns } from '../actions/campaigns';
 
@@ -41,9 +42,7 @@ class CampaignList extends Component {
                                                 <a className="dropdown-item" href="">
                                                     Deactivate
                                                 </a>
-                                                <a className="dropdown-item" href="">
-                                                    Stats
-                                                </a>
+                                                <Link to="/stats" className="dropdown-item">Stats</Link>
                                             </div>
                                         </div>
                                     </td>
