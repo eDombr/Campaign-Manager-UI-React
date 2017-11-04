@@ -3,10 +3,6 @@ import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 
 class CampaignList extends Component {
-    // componentDidMount() {
-    //     this.props.onGetCampaigns();
-    // }
-
     render() {
         return (
             <div className="container">
@@ -57,10 +53,5 @@ class CampaignList extends Component {
 export default connect(
     state => ({
         campaigns: state.campaigns
-    }),
-    dispatch => ({
-        // onGetCampaigns: () => {
-        //     dispatch(getCampaigns());
-        // }
     })
 )(CampaignList);

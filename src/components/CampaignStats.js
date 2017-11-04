@@ -2,12 +2,38 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { setCampaignStats } from '../actions/stats';
+import ReactHighcharts from 'react-highcharts';
+import 'highcharts/css/highcharts.css';
 
 class CampaignStats extends Component {
     componentWillMount() {
         this.setState({id: this.props.match.params.id});
 
         this.props.onSetCurrentStats(this.props.match.params.id);
+        this.config = {
+            chart: {
+                type: 'spline'
+            },
+            xAxis: {
+                categories: []
+            },
+            yAxis: {
+                title: {
+                    text: 'Impressions'
+                }
+            },
+            series: [{
+                name: 'Impression',
+                data: []
+            }],
+            title: {
+                text: false
+            },
+            legend: {
+                enabled: false
+            },
+            credits: false
+        }
     }
 
     componentDidUpdate(prevProps, prevState) {
@@ -18,11 +44,20 @@ class CampaignStats extends Component {
         if (this.state.id !== this.props.match.params.id) {
             this.props.onSetCurrentStats(this.props.match.params.id);
             this.setState({id: this.props.match.params.id});
+
+            this.config.series[0].data = [];
+            this.config.xAxis.categories = [];
         }
     }
 
     render() {
         const currentCampaign = this.props.campaigns.find(campaign => campaign.id === this.props.match.params.id);
+
+        this.props.currentStats.forEach(item => {
+            this.config.series[0].data.push(item.impressions);
+            this.config.xAxis.categories.push(item.date);
+        });
+
         return (
             <div className="container">
                 <div className="row">
@@ -46,7 +81,7 @@ class CampaignStats extends Component {
                 </div>
 
                 <div className="row">
-                    laallala
+                    <ReactHighcharts config={this.config}></ReactHighcharts>           
                 </div>
             </div>
         );
